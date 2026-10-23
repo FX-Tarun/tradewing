@@ -1,26 +1,173 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0b0d10;
+  --foreground: #edeff2;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Inter,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+/* Slim, quiet scrollbars for the sidebar and main content panes,
+   consistent with the dark terminal aesthetic — no default light
+   scrollbar chrome breaking the theme. */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1c2833;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #24333f;
+}
+@keyframes candleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scaleY(0.15);
+  }
+
+  55% {
+    opacity: 1;
+    transform: translateY(-2px) scaleY(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes trendReveal {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[candleReveal_650ms_cubic-bezier\(0\.16\2c 1\2c 0\.3\2c 1\)_forwards\],
+  .animate-\[trendReveal_1100ms_ease-out_300ms_forwards\] {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+/* =========================================================
+   TradeWing Page Transitions
+   Subtle terminal-style route animation.
+   ========================================================= */
+
+.page-transition-wrapper {
+  width: 100%;
+  min-height: 100%;
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.page-transition-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-hidden {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-transition-active {
+  pointer-events: none;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition-wrapper {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+@keyframes marketScan {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes signalPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+@keyframes signalRing {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  30% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
 }
